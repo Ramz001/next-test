@@ -11,7 +11,7 @@ import { sql } from "drizzle-orm";
 
 export const UserRole = pgEnum("user_role", ["ADMIN", "USER"]);
 
-export const user = pgTable(
+export const UserTable = pgTable(
   "user",
   {
     id: uuid("id").primaryKey().defaultRandom(),
@@ -29,4 +29,16 @@ export const user = pgTable(
 
     index("created_at_idx").on(t.createdAt),
   ]
+);
+
+export const UserPreferencesTable = pgTable(
+  "user_preferences",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .references(() => UserTable.id, { onDelete: "cascade" })
+      .notNull(),
+    theme: varchar("theme", { length: 255 }).notNull(),
+  },
+  (t) => [index("user_id_idx").on(t.userId)]
 );
