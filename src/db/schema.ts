@@ -6,6 +6,8 @@ import {
   uuid,
   pgEnum,
   index,
+  real,
+  primaryKey,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
@@ -19,6 +21,7 @@ export const UserTable = pgTable(
     email: varchar("email", { length: 255 }).unique().notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     role: UserRole("role").default("USER").notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },
   (t) => [
     index("email_idx")
@@ -39,6 +42,41 @@ export const UserPreferencesTable = pgTable(
       .references(() => UserTable.id, { onDelete: "cascade" })
       .notNull(),
     theme: varchar("theme", { length: 255 }).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },
   (t) => [index("user_id_idx").on(t.userId)]
+);
+
+export const PostTable = pgTable("post", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  title: varchar("title", { length: 255 }).notNull(),
+  averageRating: real("average_rating").default(0).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  authorId: uuid("author_id")
+    .references(() => UserTable.id, {
+      onDelete: "no action",
+    })
+    .notNull(),
+});
+
+export const CategoryTable = pgTable("category", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: varchar("name", { length: 255 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const PostCategoryTable = pgTable(
+  "post_category",
+  {
+    postId: uuid("post_id")
+      .references(() => PostTable.id, { onDelete: "cascade" })
+      .notNull(),
+    categoryId: uuid("category_id")
+      .references(() => CategoryTable.id, { onDelete: "cascade" })
+      .notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.postId, t.categoryId] })]
 );
