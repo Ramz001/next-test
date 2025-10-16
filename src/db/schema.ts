@@ -97,3 +97,15 @@ export const UserPreferencesTableRelations = relations(
     }),
   })
 );
+
+export const PostTableRelations = relations(PostTable, ({ one, many }) => ({
+  author: one(UserTable, {
+    fields: [PostTable.authorId],
+    references: [UserTable.id],
+  }),
+  categories: many(PostCategoryTable),
+}));
+
+export const CategoryTableRelations = relations(CategoryTable, ({ many }) => ({
+  posts: many(PostCategoryTable),
+}));
