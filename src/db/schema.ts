@@ -9,7 +9,7 @@ import {
   real,
   primaryKey,
 } from "drizzle-orm/pg-core";
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 
 export const UserRole = pgEnum("user_role", ["ADMIN", "USER"]);
 
@@ -79,4 +79,21 @@ export const PostCategoryTable = pgTable(
       .notNull(),
   },
   (t) => [primaryKey({ columns: [t.postId, t.categoryId] })]
+);
+
+// Relations
+
+export const UserRelations = relations(UserTable, ({ many, one }) => ({
+  posts: many(PostTable),
+  preferences: one(UserPreferencesTable),
+}));
+
+export const UserPreferencesTableRelations = relations(
+  UserPreferencesTable,
+  ({ one }) => ({
+    user: one(UserTable, {
+      fields: [UserPreferencesTable.userId],
+      references: [UserTable.id],
+    }),
+  })
 );
