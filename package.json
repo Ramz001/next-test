@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "next build --turbopack",
     "start": "next start",
     "lint": "next lint",
     "db:generate": "drizzle-kit generate",
@@ -17,13 +17,14 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
+    "babel-plugin-react-compiler": "^1.0.0",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.6",
-    "next": "15.3.3",
+    "next": "16.0.0-canary.15",
     "pino": "^10.1.0",
     "pino-loki": "^2.6.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "19.3.0-canary-f6a48828-20251019",
+    "react-dom": "19.3.0-canary-f6a48828-20251019"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
