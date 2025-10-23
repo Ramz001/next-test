@@ -1,7 +1,9 @@
 import { Logger } from "pino";
+import { Registry, collectDefaultMetrics } from "prom-client";
 
 declare global {
   var logger: Logger | undefined;
+  var metrics: { registry: Registry } | undefined;
 }
 
 export async function register() {
@@ -18,5 +20,12 @@ export async function register() {
 
     const logger = pino(transport);
     globalThis.logger = logger;
+
+    const prometheusRegistry = new Registry();
+    collectDefaultMetrics({ register: prometheusRegistry });
+
+    globalThis.metrics = {
+      registry: prometheusRegistry,
+    };
   }
 }

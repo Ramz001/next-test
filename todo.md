@@ -6,12 +6,6 @@
 * [ ] Define sample tables & run migrations
 * [ ] Test CRUD, joins, transactions
 
-## Valibot
-
-* [ ] Install & create schemas
-* [ ] Test `superRefine` & custom rules
-* [ ] Integrate in API & test forms
-
 ## React 19 + Next 16
 
 * [ ] Upgrade React & enable Next 16 features

@@ -2,7 +2,6 @@
 next to do for testing features of tech
 
 drizzle set up full (new orm)
-valibot set up full (new validator instead of zod)
 react 19 view transitions set up with next 16 features test
 shadcn new components test
 test proper production logging strategy with grafana prometheus loki otel collector and zipkin
