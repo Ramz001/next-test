@@ -45,7 +45,7 @@ services:
     restart: always
     command: ["--config=/etc/otel-collector-config.yml"]
     volumes:
-      - ./otel-collector-config.yml:/etc/otel-collector-config.yml
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yml
     ports:
       - "4317:4317" # OTLP gRPC receiver
       - "4318:4318" # OTLP HTTP receiver
@@ -61,6 +61,14 @@ services:
     image: openzipkin/zipkin:latest
     ports:
       - "9411:9411"
+    networks:
+      - monitoring
+  postgres_exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    environment:
+      DATA_SOURCE_NAME: ${DATABASE_URL}
+    ports:
+      - "9187:9187"
     networks:
       - monitoring
 
