@@ -1,12 +1,12 @@
 // app/actions.ts
 'use server'
 import { db } from '@/db/drizzle'
-import { UserTable } from '@/db/schema'
+import { user} from '@/db/schema'
 
 export async function insertUser() {
   try {
     await db
-      .insert(UserTable)
+      .insert(user)
       .values({
         id: '1',
         name: 'John',
@@ -14,7 +14,7 @@ export async function insertUser() {
       })
       .returning()
       .onConflictDoUpdate({
-        target: UserTable.email,
+        target: user.email,
         set: { name: 'Updated email' },
       })
   } catch (error) {
@@ -24,7 +24,7 @@ export async function insertUser() {
 
 export async function querySelectUser() {
   try {
-    const user = db.query.UserTable.findMany({
+    const user = db.query.user.findMany({
       with: {},
     })
     return user

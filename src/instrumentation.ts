@@ -29,6 +29,6 @@ export async function register() {
       registry: prometheusRegistry,
     }
 
-    registerOTel()
+    registerOTel({ serviceName: process.env.OTEL_SERVICE_NAME })
   }
 }
