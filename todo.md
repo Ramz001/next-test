@@ -40,10 +40,10 @@
 
 ## Logging / Observability
 
-* [ ] Add structured logging to API
-* [ ] Set up OpenTelemetry Collector
-* [ ] Connect to Grafana Loki, Prometheus, Zipkin
-* [ ] Test tracing & metrics collection
+* [X] Add structured logging to API
+* [X] Set up OpenTelemetry Collector
+* [X] Connect to Grafana Loki, Prometheus, Zipkin
+* [X] Test tracing & metrics collection
 
 ## Authentication – Full Features
 
