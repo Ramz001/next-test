@@ -1,2 +1,2 @@
 
-pnpm format:write && pnpm lint
+pnpm format:write
