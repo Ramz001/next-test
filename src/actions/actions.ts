@@ -1,7 +1,7 @@
 // app/actions.ts
 'use server'
 import { db } from '@/db/drizzle'
-import { user} from '@/db/schema'
+import { user } from '@/db/schema'
 
 export async function insertUser() {
   try {

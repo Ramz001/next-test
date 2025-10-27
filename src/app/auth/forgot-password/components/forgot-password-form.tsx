@@ -23,7 +23,6 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 
-
 // Schema for email validation
 const formSchema = z.object({
   email: z.email(),

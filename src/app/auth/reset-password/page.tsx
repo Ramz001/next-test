@@ -39,7 +39,7 @@ export default function ResetPasswordPreview() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-           try {   
+    try {
       // Assuming an async reset password function
       console.log(values)
       toast.success(
