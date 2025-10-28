@@ -20,6 +20,11 @@ import { passkey } from 'better-auth/plugins/passkey'
 import { emailHarmony } from 'better-auth-harmony'
 
 export const auth = betterAuth({
+  rateLimit: {
+    enabled: true,
+    window: 10, // time window in seconds
+    max: 100, // max requests in the window
+  },
   database: drizzleAdapter(db, {
     provider: 'pg',
   }),
