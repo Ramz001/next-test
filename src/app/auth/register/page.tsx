@@ -4,9 +4,7 @@ import Link from 'next/link'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-
 import {
   Form,
   FormControl,
@@ -25,6 +23,9 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
+import { Spinner } from '@/components/ui/spinner'
+import { authClient } from '@/lib/auth.client'
+import { toast } from 'sonner'
 
 const signUpSchema = z.object({
   name: z.string().min(2),
@@ -36,8 +37,6 @@ type SignUpForm = z.infer<typeof signUpSchema>
 
 export default function RegisterPreview() {
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
-  const [isLoading, setIsLoading] = useState(false)
 
   const form = useForm<SignUpForm>({
     resolver: zodResolver(signUpSchema),
@@ -48,12 +47,26 @@ export default function RegisterPreview() {
       confirmPassword: '',
     },
   })
+  const { isSubmitting } = form.formState
 
-  const handleSubmit = async (values: SignUpForm) => {
-    setIsLoading(true)
+  const handleSubmit = async (data: SignUpForm) => {
+    const res = await authClient.signUp.email(
+      { ...data, callbackURL: '/' },
+      {
+        onError: (error) => {
+          toast.error(error.error.message || 'Failed to sign up')
+        },
+        onSuccess: () => {
+          toast.success('Registration successful!')
+        },
+      }
+    )
+
+    if (res.error == null && !res.data.user.emailVerified) {
+      toast.success('Please check your email for verification')
+      router.push('/auth/verify-email')
+    }
   }
-
-  const isSubmitting = isPending || isLoading
 
   return (
     <Card className="mx-auto w-full max-w-md">
@@ -157,7 +170,7 @@ export default function RegisterPreview() {
               />
 
               <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? 'Creating Account...' : 'Register'}
+                {isSubmitting ? <Spinner /> : 'Register'}
               </Button>
             </div>
           </form>
