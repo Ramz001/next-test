@@ -10,7 +10,7 @@ import {
   organizationClient,
   deviceAuthorizationClient,
   lastLoginMethodClient,
-  multiSessionClient
+  multiSessionClient,
 } from 'better-auth/client/plugins'
 
 export const authClient = createAuthClient({
@@ -39,6 +39,6 @@ export const authClient = createAuthClient({
     organizationClient(),
     deviceAuthorizationClient(),
     lastLoginMethodClient(),
-    multiSessionClient()
+    multiSessionClient(),
   ],
 })
