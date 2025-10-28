@@ -18,6 +18,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@better-auth/stripe": "^1.3.32",
     "@hookform/resolvers": "^5.2.2",
     "@neondatabase/serverless": "^1.0.2",
     "@opentelemetry/api": "^1.9.0",
@@ -55,6 +56,7 @@
     "@vercel/speed-insights": "^1.2.0",
     "babel-plugin-react-compiler": "^1.0.0",
     "better-auth": "^1.3.32",
+    "better-auth-harmony": "^1.2.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -81,6 +83,7 @@
     "react-resizable-panels": "^3.0.6",
     "recharts": "^3.3.0",
     "sonner": "^2.0.7",
+    "stripe": "^19.1.0",
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",
     "zod": "^4.1.12"
