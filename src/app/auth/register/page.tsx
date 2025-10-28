@@ -25,33 +25,31 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
-import { PhoneInput } from '@/components/ui/phone-input'
 
-const formSchema = z.object({
+const signUpSchema = z.object({
   name: z.string().min(2),
   email: z.email(),
-  phone: z.string().min(5),
   password: z.string().min(6),
   confirmPassword: z.string().min(6),
 })
+type SignUpForm = z.infer<typeof signUpSchema>
 
 export default function RegisterPreview() {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [isLoading, setIsLoading] = useState(false)
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<SignUpForm>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: '',
       email: '',
-      phone: '',
       password: '',
       confirmPassword: '',
     },
   })
 
-  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+  const handleSubmit = async (values: SignUpForm) => {
     setIsLoading(true)
   }
 
@@ -107,25 +105,6 @@ export default function RegisterPreview() {
                         autoComplete="email"
                         disabled={isSubmitting}
                         {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Phone Field */}
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem className="grid gap-2">
-                    <FormLabel htmlFor="phone">Phone Number</FormLabel>
-                    <FormControl>
-                      <PhoneInput
-                        {...field}
-                        defaultCountry="UZ"
-                        disabled={isSubmitting}
                       />
                     </FormControl>
                     <FormMessage />

@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
-
+import { Toaster } from '@/components/ui/sonner'
+import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Analytics } from '@vercel/analytics/next'
+import RootProvider from '@/providers/root.provider'
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
@@ -26,26 +29,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-background relative min-h-screen w-full antialiased`}
       >
-        <div className="relative min-h-screen w-full bg-white">
-          {/* White Sphere Grid Background */}
-          <div
-            className="absolute inset-0 z-0"
-            style={{
-              background: 'white',
-              backgroundImage: `
-          linear-gradient(to right, rgba(71,85,105,0.3) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(71,85,105,0.3) 1px, transparent 1px),
-          radial-gradient(circle at 50% 50%, rgba(139,92,246,0.25) 0%, rgba(139,92,246,0.1) 40%, transparent 80%)
-        `,
-              backgroundSize: '32px 32px, 32px 32px, 100% 100%',
-            }}
-          />
-          <main className="relative flex h-svh w-screen items-center justify-center md:h-screen md:w-screen">
-            {children}
-          </main>
-        </div>
+        <RootProvider>
+          <span className="bg-grid-light bg-grid-dark fixed inset-0 z-[-1] transition-colors" />
+          <Toaster position="bottom-center" />
+          <SpeedInsights />
+          <Analytics />
+          {children}
+        </RootProvider>
       </body>
     </html>
   )
